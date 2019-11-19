@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from 'react-router-dom';
 import axios from "axios";
 
 class List extends Component {
@@ -6,20 +7,23 @@ class List extends Component {
     super(props);
     this.state = {
       data: [],
+      status: false
     };
   }
 
   componentDidMount() {
-    axios.get("http://5dccfe88d795470014e4ca93.mockapi.io/test").then(res => {
-      const data = res.data;
-      this.setState({ data });
+    axios.get(`http://5dccfe88d795470014e4ca93.mockapi.io/test`)
+      .then(res => {
+      this.setState({ data: res.data });
     });
   }
 
   onDelete(id) {
-    axios.delete(`http://5dccfe88d795470014e4ca93.mockapi.io/test/`+ id).then(res => {
-      console.log('DELETE')
-    })
+    axios.delete(`http://5dccfe88d795470014e4ca93.mockapi.io/test/` + id)
+      .then(res => {
+      this.componentDidMount()
+    });
+    
   }
 
   render() {
@@ -30,10 +34,14 @@ class List extends Component {
           <td>{item.title}</td>
           <td>{item.body}</td>
           <td>
-            <button className="btn btn-success btn-sm">
-              <a href="#" className="text-light">Edit</a>
+            <Link to={"/update/"+ item.id} className="btn btn-success btn-sm">Edit</Link>
+            <button
+              type="button"
+              className="btn btn-danger btn-sm ml-1"
+              onClick={() => this.onDelete(item.id)}
+            >
+              Delete
             </button>
-            <button type="button" className="btn btn-danger btn-sm ml-1" onClick={() => this.onDelete(item.id)}>Delete</button>
           </td>
         </tr>
       );

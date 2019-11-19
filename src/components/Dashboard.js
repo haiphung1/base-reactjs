@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { Layout, Menu, Breadcrumb } from "antd";
 import List from './List';
 import Create from './Create';
+import Update from './Update';
 
 const { Header, Content, Sider } = Layout;
 
@@ -28,10 +29,10 @@ class Dashboard extends Component {
                 defaultOpenKeys={["sub1"]}
                 style={{ height: "100%", borderRight: 0 }}
               >
-                <Menu.Item key="1">
+                <Menu.Item>
                   <Link to="/">Home</Link>
                 </Menu.Item>
-                <Menu.Item key="2">
+                <Menu.Item>
                   <Link to="/create">Create</Link>
                 </Menu.Item>           
               </Menu>
@@ -50,6 +51,7 @@ class Dashboard extends Component {
               >
                 <Route exact path="/" component={List} />
                 <Route path="/create" component={Create} />
+                <Route path="/update/:id" component={Update} />
               </Content>
             </Layout>
           </Layout>
